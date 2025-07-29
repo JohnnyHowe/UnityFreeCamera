@@ -13,6 +13,11 @@ public class FreeCameraDebug : FreeCamera
     [SerializeField][ReadOnly] protected bool isSensitive = false;
     [SerializeField][ReadOnly] protected CursorLockMode originalCursorLockMode;
 
+    protected void Start()
+    {
+        originalCursorLockMode = Cursor.lockState;
+    }
+
     protected void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -43,6 +48,11 @@ public class FreeCameraDebug : FreeCamera
             if (Input.GetMouseButtonUp(0)) isSensitive = false;
             sensitivityMultiplier = isSensitive ? sensitivityMultiplierOnMouseDown : 1;
         }
+    }
+
+    protected void OnDisable()
+    {
+        Cursor.lockState = originalCursorLockMode;
     }
 
     protected virtual void ToggleFreeCamera()
